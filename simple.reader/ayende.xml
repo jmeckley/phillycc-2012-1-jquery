@@ -1,0 +1,952 @@
+﻿<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" media="screen" href="/~d/styles/rss2full.xsl"?><?xml-stylesheet type="text/css" media="screen" href="http://feeds.feedburner.com/~d/styles/itemcontent.css"?><rss xmlns:feedburner="http://rssnamespace.org/feedburner/ext/1.0" version="2.0"><channel><title>Ayende @ Rahien</title><link>http://ayende.com/blog/</link><description>Ayende @ Rahien</description><copyright>Copyright (C) Ayende Rahien  2004 - 2012 (c) 2012</copyright><ttl>60</ttl><atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="self" type="application/rss+xml" href="http://feeds.feedburner.com/AyendeRahien" /><feedburner:info uri="ayenderahien" /><atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="hub" href="http://pubsubhubbub.appspot.com/" /><item><title>Rotten Scheduling</title><description>&lt;p&gt;“We need to run a specific task every 72 hours, I thought about this approach…”&lt;/p&gt; &lt;blockquote&gt;&lt;pre class="csharpcode"&gt;&lt;span class="kwrd"&gt;public&lt;/span&gt; &lt;span class="kwrd"&gt;class&lt;/span&gt; TimedTask
+{
+  &lt;span class="kwrd"&gt;public&lt;/span&gt; &lt;span class="kwrd"&gt;static&lt;/span&gt; Timer Timer;
+  
+  &lt;span class="kwrd"&gt;public&lt;/span&gt; &lt;span class="kwrd"&gt;static&lt;/span&gt; &lt;span class="kwrd"&gt;void&lt;/span&gt; Init()
+  {
+    Timer = &lt;span class="kwrd"&gt;new&lt;/span&gt; Timer(ExecuteEvery72Hours, &lt;span class="kwrd"&gt;null&lt;/span&gt;, TimeSpan.FromHours(72), TimeSpan.FromHours(72));
+  }
+  
+  &lt;span class="kwrd"&gt;public&lt;/span&gt; &lt;span class="kwrd"&gt;static&lt;/span&gt; &lt;span class="kwrd"&gt;void&lt;/span&gt; ExecuteEvery72Hours()
+  {
+    &lt;span class="rem"&gt;// do something important&lt;/span&gt;
+  }
+}&lt;/pre&gt;
+&lt;style type="text/css"&gt;.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+&lt;/style&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Let us assume that this code is being called properly. Why is this a bloody rotten idea?&lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/AyendeRahien/~4/ezu8g1UMUPU" height="1" width="1"/&gt;</description><link>http://feedproxy.google.com/~r/AyendeRahien/~3/ezu8g1UMUPU/rotten-scheduling</link><guid isPermaLink="false">http://ayende.com/blog/155457/rotten-scheduling?key=47a203dc-eb07-448a-82e3-2c1919704db3</guid><pubDate>Fri, 11 May 2012 09:00:00 GMT</pubDate><feedburner:origLink>http://ayende.com/blog/155457/rotten-scheduling?key=47a203dc-eb07-448a-82e3-2c1919704db3</feedburner:origLink></item><item><title>Reviewing Xenta and wishing I hadn&amp;rsquo;t</title><description>&lt;p&gt;&lt;a href="http://xenta.codeplex.com/team/view"&gt;Xenta Framework&lt;/a&gt; is the extensible enterprise n-tier application framework with multilayered architecture.&lt;/p&gt; &lt;p&gt;I was asked by the coordinator for the project to review it.&lt;/p&gt; &lt;p&gt;This isn’t going to take long. I looked at the code, and I got this:&lt;/p&gt; &lt;p&gt;&lt;a href="http://ayende.com/blog/Images/Windows-Live-Writer/Reviewing-Xenta_BAF4/image_2.png"&gt;&lt;img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://ayende.com/blog/Images/Windows-Live-Writer/Reviewing-Xenta_BAF4/image_thumb.png" width="235" height="134"&gt;&lt;/a&gt;&lt;/p&gt; &lt;p&gt;I am sure you remember the last time when I run into something like this, except that the number of projects at that solution was a quarter of what we had here, and I already had to hold my nose.&lt;/p&gt; &lt;p&gt;Looking a bit deeper:&lt;/p&gt; &lt;p&gt;&lt;a href="http://ayende.com/blog/Images/Windows-Live-Writer/Reviewing-Xenta_BAF4/image_4.png"&gt;&lt;img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://ayende.com/blog/Images/Windows-Live-Writer/Reviewing-Xenta_BAF4/image_thumb_1.png" width="325" height="380"&gt;&lt;/a&gt;&lt;/p&gt; &lt;p&gt;Here is a hint, you &lt;em&gt;are&lt;/em&gt; allowed to have more than one class per project. &lt;/p&gt; &lt;p&gt;Having that many project is a nightmare in trying to manage them. Finding things, actually making &lt;em&gt;use&lt;/em&gt; of how things work. Not to mention that the level of abstractness required to support that is giving me a headache.&lt;/p&gt; &lt;p&gt;This is still without looking at the code, mind.&lt;/p&gt; &lt;p&gt;Now, let us look at the actual code. I like to start the controllers. The following code is from ForumController:&lt;/p&gt; &lt;blockquote&gt;&lt;pre class="csharpcode"&gt;[HttpPost, ValidateInput(&lt;span class="kwrd"&gt;false&lt;/span&gt;)]
+&lt;span class="kwrd"&gt;public&lt;/span&gt; ActionResult Update(&lt;span class="kwrd"&gt;int&lt;/span&gt; forumID, FormCollection form)
+{
+    ForumModel m = &lt;span class="kwrd"&gt;new&lt;/span&gt; ForumModel()
+    {
+        ForumID = forumID
+    };
+
+&lt;font style="background-color: #ffff00"&gt;    &lt;span class="kwrd"&gt;if&lt;/span&gt;(!m.Load())&lt;/font&gt;
+    {
+        &lt;span class="kwrd"&gt;return&lt;/span&gt; HttpNotFound();
+    }
+
+    &lt;span class="kwrd"&gt;if&lt;/span&gt;(TryUpdateModel&amp;lt;ForumModel&amp;gt;(m, &lt;span class="str"&gt;"Model"&lt;/span&gt;, form))
+    {
+        &lt;span class="kwrd"&gt;try&lt;/span&gt;
+        {
+&lt;font style="background-color: #ffff00"&gt;            m.Update();&lt;/font&gt;
+        }
+        &lt;span class="kwrd"&gt;catch&lt;/span&gt;(Exception ex)
+        {
+            ModelState.AddModelError(&lt;span class="str"&gt;"API"&lt;/span&gt;, ex);
+        }
+    }
+
+    &lt;span class="kwrd"&gt;if&lt;/span&gt;(!ModelState.IsValid)
+    {
+        TempData.OperationStatus(&lt;span class="str"&gt;"Failed"&lt;/span&gt;);
+        TempData.PersistObject(&lt;span class="str"&gt;"Model"&lt;/span&gt;, m);
+        TempData.PersistModelState(ModelState);
+    }
+    &lt;span class="kwrd"&gt;else&lt;/span&gt;
+    {
+        TempData.OperationStatus(&lt;span class="str"&gt;"Success"&lt;/span&gt;);
+    }
+
+    &lt;span class="kwrd"&gt;return&lt;/span&gt; RedirectToAction(&lt;span class="str"&gt;"Edit"&lt;/span&gt;, &lt;span class="kwrd"&gt;new&lt;/span&gt;
+    {
+        ForumID = m.ForumID
+    });
+}&lt;/pre&gt;
+&lt;style type="text/css"&gt;.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+&lt;/style&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Seriously, I haven’t seen this style of architecture in a while. Let us dig deeper:&lt;/p&gt;
+&lt;blockquote&gt;&lt;pre class="csharpcode"&gt;&lt;span class="kwrd"&gt;public&lt;/span&gt; &lt;span class="kwrd"&gt;bool&lt;/span&gt; Update()
+{
+    &lt;span class="kwrd"&gt;using&lt;/span&gt;(ForumApiClient api = &lt;span class="kwrd"&gt;new&lt;/span&gt; ForumApiClient())
+    {
+        var dto = api.UpdateForum(ForumID, ParentForumID, DisplayOrder, Flags);
+
+        &lt;span class="kwrd"&gt;return&lt;/span&gt; Load(dto);
+    }
+}
+
+&lt;span class="kwrd"&gt;public&lt;/span&gt; &lt;span class="kwrd"&gt;bool&lt;/span&gt; Load()
+{
+    &lt;span class="kwrd"&gt;using&lt;/span&gt;(ForumApiClient api = &lt;span class="kwrd"&gt;new&lt;/span&gt; ForumApiClient())
+    {
+        var dto = api.GetForum(ForumID);
+
+        &lt;span class="kwrd"&gt;return&lt;/span&gt; Load(dto);
+    }
+}
+&lt;/pre&gt;
+&lt;style type="text/css"&gt;.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+&lt;/style&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;In case you are wondering, those are on the ForumModel class.&lt;/p&gt;
+&lt;p&gt;This piece of code is from the ForumPostModel class, it may look familiar:&lt;/p&gt;
+&lt;blockquote&gt;&lt;pre class="csharpcode"&gt;&lt;span class="kwrd"&gt;public&lt;/span&gt; &lt;span class="kwrd"&gt;bool&lt;/span&gt; Load()
+{
+    &lt;span class="kwrd"&gt;using&lt;/span&gt;(ForumApiClient api = &lt;span class="kwrd"&gt;new&lt;/span&gt; ForumApiClient())
+    {
+        var dto = api.GetPost(PostID);
+
+        &lt;span class="kwrd"&gt;return&lt;/span&gt; Load(dto);
+    }
+}
+&lt;/pre&gt;
+&lt;style type="text/css"&gt;.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+&lt;/style&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;This ForumApiClient is actually a WCF Proxy class, which leads us to this interface:&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://ayende.com/blog/Images/Windows-Live-Writer/Reviewing-Xenta_BAF4/image_6.png"&gt;&lt;img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://ayende.com/blog/Images/Windows-Live-Writer/Reviewing-Xenta_BAF4/image_thumb_2.png" width="1075" height="894"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I won’t comment on this any further, but will go directly to ForumApiService, where we actually update a forum using the following code:&lt;/p&gt;
+&lt;blockquote&gt;&lt;pre class="csharpcode"&gt;&lt;span class="kwrd"&gt;public&lt;/span&gt; ForumDto UpdateForum(&lt;span class="kwrd"&gt;int&lt;/span&gt; forumID,
+    &lt;span class="kwrd"&gt;int&lt;/span&gt; parentForumID,
+    &lt;span class="kwrd"&gt;int&lt;/span&gt; displayOrder,
+    ForumFlags flags)
+{
+    ForumService forumService = Infrastructure.Component&amp;lt;ForumService&amp;gt;();
+
+    &lt;span class="kwrd"&gt;if&lt;/span&gt;(forumService == &lt;span class="kwrd"&gt;null&lt;/span&gt;)
+    {
+        &lt;span class="kwrd"&gt;throw&lt;/span&gt; &lt;span class="kwrd"&gt;new&lt;/span&gt; FaultException(&lt;span class="kwrd"&gt;new&lt;/span&gt; FaultReason(&lt;span class="str"&gt;"forum service"&lt;/span&gt;), &lt;span class="kwrd"&gt;new&lt;/span&gt; FaultCode(ErrorCode.Infrastructure.ToString()));
+    }
+
+    &lt;span class="kwrd"&gt;try&lt;/span&gt;
+    {
+        ForumEntity entity = forumService.UpdateForum(forumID, parentForumID, displayOrder, flags, DateTime.UtcNow);
+
+        &lt;span class="kwrd"&gt;return&lt;/span&gt; Map(entity);
+    }
+    &lt;span class="kwrd"&gt;catch&lt;/span&gt;(XentaException ex)
+    {
+         &lt;span class="kwrd"&gt;throw&lt;/span&gt; &lt;span class="kwrd"&gt;new&lt;/span&gt; FaultException(&lt;span class="kwrd"&gt;new&lt;/span&gt; FaultReason(ex.Message), &lt;span class="kwrd"&gt;new&lt;/span&gt; FaultCode(ex.Code.ToString()));
+    }
+}&lt;/pre&gt;
+&lt;style type="text/css"&gt;.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+&lt;/style&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Infrastructure.Component represent a &lt;em&gt;home grown&lt;/em&gt; service locator. Note that we have manual exception handling for absolutely no reason whatsoever (you can do this in a behavior &lt;em&gt;once&lt;/em&gt;, and since this is repeated for &lt;em&gt;each and every one of the methods&lt;/em&gt;…).&lt;/p&gt;
+&lt;p&gt;I apologize in advance, but here is the full UpdateForum method:&lt;/p&gt;
+&lt;blockquote&gt;&lt;pre class="csharpcode"&gt;&lt;span class="kwrd"&gt;public&lt;/span&gt; ForumEntity UpdateForum(&lt;span class="kwrd"&gt;int&lt;/span&gt; forumID,
+    &lt;span class="kwrd"&gt;int&lt;/span&gt; parentForumID,
+    &lt;span class="kwrd"&gt;int&lt;/span&gt; displayOrder,
+    ForumFlags flags, 
+    DateTime updatedOn)
+{
+    ForumEntity oldForum = GetForum(forumID);
+            
+    &lt;span class="kwrd"&gt;if&lt;/span&gt;(oldForum == &lt;span class="kwrd"&gt;null&lt;/span&gt;)
+    {
+        &lt;span class="kwrd"&gt;throw&lt;/span&gt; &lt;span class="kwrd"&gt;new&lt;/span&gt; XentaException(ErrorCode.NotFound, &lt;span class="str"&gt;"forum"&lt;/span&gt;);
+    }
+
+    ForumEntity parentForum = &lt;span class="kwrd"&gt;null&lt;/span&gt;;
+
+    &lt;span class="kwrd"&gt;if&lt;/span&gt;(parentForumID != 0)
+    {
+        parentForum = GetForum(parentForumID);
+
+        &lt;span class="kwrd"&gt;if&lt;/span&gt;(parentForum == &lt;span class="kwrd"&gt;null&lt;/span&gt;)
+        {
+            &lt;span class="kwrd"&gt;throw&lt;/span&gt; &lt;span class="kwrd"&gt;new&lt;/span&gt; XentaException(ErrorCode.NotFound, &lt;span class="str"&gt;"forum"&lt;/span&gt;);
+        }
+
+        ForumEntity tmp = parentForum;
+
+&lt;font style="background-color: #ffff00"&gt;    HierarchyCheck:&lt;/font&gt;
+
+        &lt;span class="kwrd"&gt;if&lt;/span&gt;(tmp.ForumID == forumID)
+        {
+            &lt;span class="kwrd"&gt;throw&lt;/span&gt; &lt;span class="kwrd"&gt;new&lt;/span&gt; XentaException(ErrorCode.InvalidArgument, &lt;span class="str"&gt;"parentForumID"&lt;/span&gt;);
+        }
+        &lt;span class="kwrd"&gt;if&lt;/span&gt;(tmp.ParentForumID != 0)
+        {
+            tmp = tmp.Parent;
+
+       &lt;font style="background-color: #ffff00"&gt;     &lt;span class="kwrd"&gt;goto&lt;/span&gt; HierarchyCheck;
+&lt;/font&gt;        }
+    }
+
+    ForumEntity newForum = &lt;span class="kwrd"&gt;null&lt;/span&gt;;
+    &lt;span class="kwrd"&gt;bool&lt;/span&gt; res = Provider.UpdateForum(forumID,
+        parentForumID,
+        oldForum.LastTopicID,
+        oldForum.TopicCount,
+        oldForum.PostCount,
+        displayOrder,
+        flags,
+        oldForum.CreatedOn,
+        updatedOn);
+
+    &lt;span class="kwrd"&gt;if&lt;/span&gt;(res)
+    {
+        &lt;span class="kwrd"&gt;if&lt;/span&gt;(Cache != &lt;span class="kwrd"&gt;null&lt;/span&gt;)
+        {
+            Cache.Remove(&lt;span class="str"&gt;"ForumService_GetForum_{0}"&lt;/span&gt;, oldForum.ForumID);
+        }
+
+        newForum = GetForum(forumID);
+
+        &lt;span class="kwrd"&gt;if&lt;/span&gt;(EventBroker != &lt;span class="kwrd"&gt;null&lt;/span&gt;)
+        {
+            EventBroker.Publish&amp;lt;PostEntityUpdate&amp;lt;ForumEntity&amp;gt;&amp;gt;(&lt;span class="kwrd"&gt;this&lt;/span&gt;, &lt;span class="kwrd"&gt;new&lt;/span&gt; PostEntityUpdate&amp;lt;ForumEntity&amp;gt;(newForum, oldForum));
+        }
+    }
+    &lt;span class="kwrd"&gt;return&lt;/span&gt; newForum;
+}&lt;/pre&gt;
+&lt;style type="text/css"&gt;.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+&lt;/style&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Yes, it &lt;em&gt;is&lt;/em&gt; a goto there, for the life of me I can’t figure out why.&lt;/p&gt;
+&lt;p&gt;Note that there is also this Provider in here, which is an IForumProvider, which is implemented by… ForumProvider, which looks like this:&lt;/p&gt;
+&lt;blockquote&gt;&lt;pre class="csharpcode"&gt;&lt;span class="kwrd"&gt;public&lt;/span&gt; &lt;span class="kwrd"&gt;bool&lt;/span&gt; UpdateForum(&lt;span class="kwrd"&gt;int&lt;/span&gt; forumID,
+    &lt;span class="kwrd"&gt;int&lt;/span&gt; parentForumID,
+    &lt;span class="kwrd"&gt;int&lt;/span&gt; lastTopicID,
+    &lt;span class="kwrd"&gt;int&lt;/span&gt; topicCount,
+    &lt;span class="kwrd"&gt;int&lt;/span&gt; postCount,
+    &lt;span class="kwrd"&gt;int&lt;/span&gt; displayOrder,
+    ForumFlags flags,
+    DateTime createdOn,
+    DateTime updatedOn)
+{
+    &lt;span class="kwrd"&gt;bool&lt;/span&gt; res = &lt;span class="kwrd"&gt;false&lt;/span&gt;;
+
+    &lt;span class="kwrd"&gt;using&lt;/span&gt;(DbCommand cmd = DataSource.GetStoredProcCommand(&lt;span class="str"&gt;"fwk_Forums_Update"&lt;/span&gt;))
+    {
+        SqlServerHelper.SetInt32(DataSource, cmd, &lt;span class="str"&gt;"ForumID"&lt;/span&gt;, forumID);
+        SqlServerHelper.SetInt32(DataSource, cmd, &lt;span class="str"&gt;"ParentForumID"&lt;/span&gt;, parentForumID);
+        SqlServerHelper.SetInt32(DataSource, cmd, &lt;span class="str"&gt;"LastTopicID"&lt;/span&gt;, lastTopicID);
+        SqlServerHelper.SetInt32(DataSource, cmd, &lt;span class="str"&gt;"TopicCount"&lt;/span&gt;, topicCount);
+        SqlServerHelper.SetInt32(DataSource, cmd, &lt;span class="str"&gt;"PostCount"&lt;/span&gt;, postCount);
+        SqlServerHelper.SetInt32(DataSource, cmd, &lt;span class="str"&gt;"DisplayOrder"&lt;/span&gt;, displayOrder);
+        SqlServerHelper.SetInt32(DataSource, cmd, &lt;span class="str"&gt;"Flags"&lt;/span&gt;, (&lt;span class="kwrd"&gt;int&lt;/span&gt;)flags);
+        SqlServerHelper.SetDateTime(DataSource, cmd, &lt;span class="str"&gt;"CreatedOn"&lt;/span&gt;, createdOn);
+        SqlServerHelper.SetDateTime(DataSource, cmd, &lt;span class="str"&gt;"UpdatedOn"&lt;/span&gt;, updatedOn);
+
+        res = DataSource.ExecuteNonQuery(cmd) &amp;gt; 0;
+    }
+    &lt;span class="kwrd"&gt;return&lt;/span&gt; res;
+}&lt;/pre&gt;
+&lt;style type="text/css"&gt;.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+&lt;/style&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;And… this is about it guys.&lt;/p&gt;
+&lt;p&gt;I checked the source control, and the source control history for this goes back only to the beginning of February 2012. I assume that this is older than this, because the codebase is pretty large.&lt;/p&gt;
+&lt;p&gt;But to summarize, what we actually have is a highly abstracted project, a &lt;em&gt;lot&lt;/em&gt; of abstraction. A lot of really bad code even if you ignore the abstractions, seemingly modern codebase that still uses direct ADO.Net for pretty much everything, putting a WCF service in the middle of the application just for the fun of it.&lt;/p&gt;
+&lt;p&gt;Tons of code dedicated to error handling, caching, etc. All of which can be handled as cross cutting concerns.&lt;/p&gt;
+&lt;p&gt;This is the kind of application that I would expect to see circa 2002, not a decade later.&lt;/p&gt;
+&lt;p&gt;And please note, I actually got the review request exactly 34 minutes ago. I didn’t review the entire application (nor do I intend to). I merely took a reprehensive* vertical slide of the app and followed up on that.&lt;/p&gt;
+&lt;p&gt;*Yes, this is intentional.&lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/AyendeRahien/~4/IWuCGxGcf0E" height="1" width="1"/&gt;</description><link>http://feedproxy.google.com/~r/AyendeRahien/~3/IWuCGxGcf0E/reviewing-xenta-and-wishing-i-hadnrsquo-t</link><guid isPermaLink="false">http://ayende.com/blog/155073/reviewing-xenta-and-wishing-i-hadnrsquo-t?key=ee820864-79e7-4ad3-b5a7-43bc23624c02</guid><pubDate>Thu, 10 May 2012 09:00:00 GMT</pubDate><feedburner:origLink>http://ayende.com/blog/155073/reviewing-xenta-and-wishing-i-hadnrsquo-t?key=ee820864-79e7-4ad3-b5a7-43bc23624c02</feedburner:origLink></item><item><title>The best multi threading debugging tool is Microsoft Excel</title><description>&lt;p&gt;In any system that gets to a certain size, especially one that is multi threaded, there are a certain class of bugs that are &lt;em&gt;really &lt;/em&gt;a bitch to figure out. &lt;/p&gt; &lt;p&gt;They are usually boil down to some sort of a race condition. I have been doing that recently, trying to fix a bunch of race conditions in RavenDB. The problem with race conditions is that they are incredibly hard to reproduce, and even when you can reproduce them, you can’t really &lt;em&gt;debug them&lt;/em&gt;. &lt;/p&gt; &lt;p&gt;I came up with the following test harness to try to &lt;a href="https://github.com/ayende/ravendb/blob/27564b0e543051b298f8716e5934c7bea812a4df/Raven.Tryouts/Program.cs"&gt;narrow things down&lt;/a&gt;. Basically, create a test case that sometimes fails, and run it a thousand times.&lt;/p&gt; &lt;p&gt;Odds are that you’ll get the failure, but that isn’t the important bit. The important bit is that you setup logging properly. In my case, I set things up so the logging output to CSV and each test run had a different file.&lt;/p&gt; &lt;p&gt;This gives me output that looks like this:&lt;/p&gt; &lt;blockquote&gt; &lt;p&gt;23:54:34.5952,Raven.Database.Server.HttpServer,Debug,Request #&amp;nbsp; 10: GET&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; -&amp;nbsp;&amp;nbsp;&amp;nbsp; 12 ms - &amp;lt;default&amp;gt;&amp;nbsp; - 200 - /indexes/dynamic/Companies?query=&amp;amp;start=0&amp;amp;pageSize=1&amp;amp;aggregation=None,,11&lt;br&gt;23:54:34.5952,Raven.Client.Document.SessionOperations.QueryOperation,Debug,"Stale query results on non stale query '' on index 'dynamic/Companies' in '&lt;a href="http://reduction:8079/'"&gt;http://reduction:8079/'&lt;/a&gt;, query will be retried, index etag is: bcf0fed1-d975-43b4-bfb7-65221ef06b99",,1&lt;br&gt;23:54:34.5952,Raven.Database.Indexing.WorkContext,Debug,"No work was found, workerWorkCounter: 10, for: TasksExecuter, will wait for additional work",,6&lt;br&gt;23:54:34.5952,Raven.Database.Indexing.WorkContext,Debug,Incremented work counter to 11 because: WORK BY IndexingExecuter,,12&lt;br&gt;23:54:34.5952,Raven.Database.Indexing.WorkContext,Debug,"No work was found, workerWorkCounter: 11, for: TasksExecuter, will wait for additional work",,6&lt;br&gt;23:54:34.5952,Raven.Database.Indexing.WorkContext,Debug,"No work was found, workerWorkCounter: 11, for: ReducingExecuter, will wait for additional work",,21&lt;br&gt;23:54:34.5952,Raven.Database.Indexing.WorkContext,Debug,"No work was found, workerWorkCounter: 11, for: IndexingExecuter, will wait for additional work",,12&lt;br&gt;23:54:34.6952,Raven.Client.Document.SessionOperations.QueryOperation,Debug,Executing query '' on index 'dynamic/Companies' in '&lt;a href="http://reduction:8079/',,1"&gt;http://reduction:8079/',,1&lt;/a&gt;&lt;br&gt;23:54:34.8172,Raven.Database.Indexing.Index.Querying,Debug,Issuing query on index Temp/Companies for all documents,,11&lt;br&gt;23:54:34.8172,Raven.Storage.Esent.StorageActions.DocumentStorageActions,Debug,Document with key 'companies/1' was found,,11&lt;br&gt;&lt;/p&gt;&lt;/blockquote&gt; &lt;p&gt;Not really helpful in figure out what is going on, right? Except for one tiny thing, we load them to Excel, and we use conditional formatting to get things to look like this:&lt;/p&gt; &lt;p&gt;&lt;a href="http://ayende.com/blog/Images/Windows-Live-Writer/The-best-multi-threading-debugging-tool_1502F/image_2.png"&gt;&lt;img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://ayende.com/blog/Images/Windows-Live-Writer/The-best-multi-threading-debugging-tool_1502F/image_thumb.png" width="1239" height="544"&gt;&lt;/a&gt;&lt;/p&gt; &lt;p&gt;The reason this is so helpful? You can actually see the threads interleaving. This usually help me get to roughly the right place, and then I can add additional logging so I can figure out better what is &lt;em&gt;actually&lt;/em&gt; going on.&lt;/p&gt; &lt;p&gt;I was able to detect and fix several race conditions using this approach. &lt;/p&gt; &lt;p&gt;And yes, I know that this is basically printf() debugging. But at least it is printf() debugging with pretty colors.&lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/AyendeRahien/~4/mKMbTOLtjc4" height="1" width="1"/&gt;</description><link>http://feedproxy.google.com/~r/AyendeRahien/~3/mKMbTOLtjc4/the-best-multi-threading-debugging-tool-is-microsoft-excel</link><guid isPermaLink="false">http://ayende.com/blog/154817/the-best-multi-threading-debugging-tool-is-microsoft-excel?key=4868300a-e80b-4c00-9fc8-84f988cf16a4</guid><pubDate>Wed, 09 May 2012 09:00:00 GMT</pubDate><feedburner:origLink>http://ayende.com/blog/154817/the-best-multi-threading-debugging-tool-is-microsoft-excel?key=4868300a-e80b-4c00-9fc8-84f988cf16a4</feedburner:origLink></item><item><title>Answering customer questions</title><description>&lt;p&gt;This made me laugh:&lt;/p&gt; &lt;p&gt;&lt;a href="http://ayende.com/blog/Images/Windows-Live-Writer/Answering-customer-questions_EDD4/image_2.png"&gt;&lt;img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://ayende.com/blog/Images/Windows-Live-Writer/Answering-customer-questions_EDD4/image_thumb.png" width="1007" height="449"&gt;&lt;/a&gt;&lt;/p&gt; &lt;p&gt;And yes, I am aware that laughing at my own action is… strange.&lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/AyendeRahien/~4/Ow_RkkMgpP0" height="1" width="1"/&gt;</description><link>http://feedproxy.google.com/~r/AyendeRahien/~3/Ow_RkkMgpP0/answering-customer-questions</link><guid isPermaLink="false">http://ayende.com/blog/154369/answering-customer-questions?key=36bc85bc-591f-4a02-936e-d96b1415de01</guid><pubDate>Tue, 08 May 2012 09:00:00 GMT</pubDate><feedburner:origLink>http://ayende.com/blog/154369/answering-customer-questions?key=36bc85bc-591f-4a02-936e-d96b1415de01</feedburner:origLink></item><item><title>Testing Rhino Service Bus applications</title><description>&lt;p&gt;One of the really nice things about Rhino Service Bus applications is that we have created a structured way to handle inputs and outputs. You have messages coming in and out, as well as the endpoint local state to deal with. You don’t have to worry about how to deal with external integration points, because those are already going over messages.&lt;/p&gt; &lt;p&gt;And when you have basic input/output figured out, you are pretty much done.&lt;/p&gt; &lt;p&gt;For example, let us see the code that handles extending trail licenses in our ordering system:&lt;/p&gt; &lt;blockquote&gt;&lt;pre class="csharpcode"&gt;&lt;span class="kwrd"&gt;public&lt;/span&gt; &lt;span class="kwrd"&gt;class&lt;/span&gt; ExtendTrialLicenseConsumer : ConsumerOf&amp;lt;ExtendTrialLicense&amp;gt;
+{
+    &lt;span class="kwrd"&gt;public&lt;/span&gt; IDocumentSession Session { get; set; }
+    &lt;span class="kwrd"&gt;public&lt;/span&gt; IServiceBus Bus { get; set; }
+
+    &lt;span class="kwrd"&gt;public&lt;/span&gt; &lt;span class="kwrd"&gt;void&lt;/span&gt; Consume(ExtendTrialLicense message)
+    {
+        var productId = message.ProductId ?? &lt;span class="str"&gt;"products/"&lt;/span&gt; + message.Profile;
+        var trial = Session.Query&amp;lt;Trial&amp;gt;()
+            .Where(x =&amp;gt; x.Email == message.Email &amp;amp;&amp;amp; x.ProductId == productId)
+            .FirstOrDefault();
+
+        &lt;span class="kwrd"&gt;if&lt;/span&gt; (trial == &lt;span class="kwrd"&gt;null&lt;/span&gt;)
+            &lt;span class="kwrd"&gt;return&lt;/span&gt;;
+        
+        trial.EndsAt = DateTime.Today.AddDays(message.Days);
+        Bus.Send(&lt;span class="kwrd"&gt;new&lt;/span&gt; NewTrial
+        {
+            ProductId = productId,
+            Email = trial.Email,
+            Company = trial.Company,
+            FullName = trial.Name,
+            TrackingId = trial.TrackingId
+        });
+    }
+}&lt;/pre&gt;
+&lt;style type="text/css"&gt;.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+&lt;/style&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;How do we test something like this? As it turns out, quite easily:&lt;/p&gt;
+&lt;blockquote&gt;&lt;pre class="csharpcode"&gt;&lt;span class="kwrd"&gt;public&lt;/span&gt; &lt;span class="kwrd"&gt;class&lt;/span&gt; TrailTesting : ConsumersTests
+{
+    &lt;span class="kwrd"&gt;protected&lt;/span&gt; &lt;span class="kwrd"&gt;override&lt;/span&gt; &lt;span class="kwrd"&gt;void&lt;/span&gt; PrepareData(IDocumentSession session)
+    {
+        session.Store(&lt;span class="kwrd"&gt;new&lt;/span&gt; Trial
+        {
+            Email = &lt;span class="str"&gt;"you@there.gov"&lt;/span&gt;,
+            EndsAt = DateTime.Today,
+            ProductId = &lt;span class="str"&gt;"products/nhprof"&lt;/span&gt;
+        });
+    }
+
+    [Fact]
+    &lt;span class="kwrd"&gt;public&lt;/span&gt; &lt;span class="kwrd"&gt;void&lt;/span&gt; Will_update_trial_date()
+    {
+        Consume&amp;lt;ExtendTrialLicenseConsumer, ExtendTrialLicense&amp;gt;(&lt;span class="kwrd"&gt;new&lt;/span&gt; ExtendTrialLicense
+        {
+            ProductId = &lt;span class="str"&gt;"products/nhprof"&lt;/span&gt;,
+            Days = 30,
+            Email = &lt;span class="str"&gt;"you@there.gov"&lt;/span&gt;,
+        });
+
+        &lt;span class="kwrd"&gt;using&lt;/span&gt; (var session = documentStore.OpenSession())
+        {
+            var trial = session.Load&amp;lt;Trial&amp;gt;(1);
+            Assert.Equal(DateTime.Today.AddDays(30), trial.EndsAt);
+        }
+    }
+
+    &lt;span class="rem"&gt;// more tests here&lt;/span&gt;
+}&lt;/pre&gt;
+&lt;style type="text/css"&gt;.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+&lt;/style&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;All the magic happens in the base class, though:&lt;/p&gt;
+&lt;blockquote&gt;&lt;pre class="csharpcode"&gt;&lt;span class="kwrd"&gt;public&lt;/span&gt; &lt;span class="kwrd"&gt;abstract&lt;/span&gt; &lt;span class="kwrd"&gt;class&lt;/span&gt; ConsumersTests : IDisposable
+{
+    &lt;span class="kwrd"&gt;protected&lt;/span&gt; IDocumentStore documentStore;
+    &lt;span class="kwrd"&gt;private&lt;/span&gt; IServiceBus Bus = &lt;span class="kwrd"&gt;new&lt;/span&gt; FakeBus();
+
+    &lt;span class="kwrd"&gt;protected&lt;/span&gt; ConsumersTests()
+    {
+        documentStore = &lt;span class="kwrd"&gt;new&lt;/span&gt; EmbeddableDocumentStore
+        {
+            RunInMemory = &lt;span class="kwrd"&gt;true&lt;/span&gt;,
+            Conventions =
+                {
+                    DefaultQueryingConsistency = ConsistencyOptions.QueryYourWrites
+                }
+        }.Initialize();
+
+        IndexCreation.CreateIndexes(&lt;span class="kwrd"&gt;typeof&lt;/span&gt;(Products_Stats).Assembly, documentStore);
+
+        Products.Create(documentStore);
+        &lt;span class="kwrd"&gt;using&lt;/span&gt; (var session = documentStore.OpenSession())
+        {
+            PrepareData(session);
+            session.SaveChanges();
+        }
+    }
+
+    &lt;span class="kwrd"&gt;protected&lt;/span&gt; T ConsumeSentMessage&amp;lt;T&amp;gt;()
+    {
+        var fakeBus = ((FakeBus)Bus);
+        &lt;span class="kwrd"&gt;object&lt;/span&gt; o = fakeBus.Messages.Where(x =&amp;gt; x.GetType() == &lt;span class="kwrd"&gt;typeof&lt;/span&gt;(T)).First();
+
+        fakeBus.Messages.Remove(o);
+        &lt;span class="kwrd"&gt;return&lt;/span&gt; (T) o;
+    }
+
+    &lt;span class="kwrd"&gt;protected&lt;/span&gt; &lt;span class="kwrd"&gt;void&lt;/span&gt; Consume&amp;lt;TConsumer, TMsg&amp;gt;(TMsg msg)
+        &lt;span class="kwrd"&gt;where&lt;/span&gt; TConsumer : ConsumerOf&amp;lt;TMsg&amp;gt;, &lt;span class="kwrd"&gt;new&lt;/span&gt;()
+    {
+        var foo = &lt;span class="kwrd"&gt;new&lt;/span&gt; TConsumer();
+
+        &lt;span class="kwrd"&gt;using&lt;/span&gt; (var documentSession = documentStore.OpenSession())
+        {
+            Set(foo, documentSession);
+            Set(foo, Bus);
+            Set(foo, documentStore);
+
+            foo.Consume(msg);
+
+            documentSession.SaveChanges();
+        }
+    }
+
+    &lt;span class="kwrd"&gt;private&lt;/span&gt; &lt;span class="kwrd"&gt;void&lt;/span&gt; Set&amp;lt;T,TValue&amp;gt;(T foo, TValue &lt;span class="kwrd"&gt;value&lt;/span&gt;)
+    {
+        PropertyInfo firstOrDefault = &lt;span class="kwrd"&gt;typeof&lt;/span&gt;(T).GetProperties().FirstOrDefault(x=&amp;gt;x.PropertyType==&lt;span class="kwrd"&gt;typeof&lt;/span&gt;(TValue));
+        &lt;span class="kwrd"&gt;if&lt;/span&gt; (firstOrDefault == &lt;span class="kwrd"&gt;null&lt;/span&gt;) &lt;span class="kwrd"&gt;return&lt;/span&gt;;
+        firstOrDefault.SetValue(foo, &lt;span class="kwrd"&gt;value&lt;/span&gt;, &lt;span class="kwrd"&gt;null&lt;/span&gt;);
+    }
+
+    &lt;span class="kwrd"&gt;protected&lt;/span&gt; &lt;span class="kwrd"&gt;virtual&lt;/span&gt; &lt;span class="kwrd"&gt;void&lt;/span&gt; PrepareData(IDocumentSession session)
+    {
+    }
+
+    &lt;span class="kwrd"&gt;public&lt;/span&gt; &lt;span class="kwrd"&gt;void&lt;/span&gt; Dispose()
+    {
+        documentStore.Dispose();
+    }
+}&lt;/pre&gt;
+&lt;style type="text/css"&gt;.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+&lt;/style&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;And here are the relevant details for the FakeBus implementation:&lt;/p&gt;
+&lt;blockquote&gt;&lt;pre class="csharpcode"&gt;&lt;span class="kwrd"&gt;public&lt;/span&gt; &lt;span class="kwrd"&gt;class&lt;/span&gt; FakeBus : IServiceBus
+{
+    &lt;span class="kwrd"&gt;public&lt;/span&gt; List&amp;lt;&lt;span class="kwrd"&gt;object&lt;/span&gt;&amp;gt;  Messages = &lt;span class="kwrd"&gt;new&lt;/span&gt; List&amp;lt;&lt;span class="kwrd"&gt;object&lt;/span&gt;&amp;gt;();
+
+    &lt;span class="kwrd"&gt;public&lt;/span&gt; &lt;span class="kwrd"&gt;void&lt;/span&gt; Send(&lt;span class="kwrd"&gt;params&lt;/span&gt; &lt;span class="kwrd"&gt;object&lt;/span&gt;[] messages)
+    {
+        Messages.AddRange(messages);
+    }
+}&lt;/pre&gt;
+&lt;style type="text/css"&gt;.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+&lt;/style&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Now, admittedly, this is a fairly raw approach and we can probably do better. This is basically hand crafted auto mocking for consumers, and I don’t like the Consume&amp;lt;TConsumer,TMsg&amp;gt;() syntax very much. But it works, it is simple and it doesn’t really gets in the way.&lt;/p&gt;
+&lt;p&gt;I won’t say it is &lt;em&gt;the&lt;/em&gt; way to go about it, but it is certainly easier than many other efforts that I have seen. We just need to handle the inputs &amp;amp; outputs and have a way to look at the local state, and you are pretty much done.&lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/AyendeRahien/~4/oSfFyQ3Inx8" height="1" width="1"/&gt;</description><link>http://feedproxy.google.com/~r/AyendeRahien/~3/oSfFyQ3Inx8/testing-rhino-service-bus-applications</link><guid isPermaLink="false">http://ayende.com/blog/152993/testing-rhino-service-bus-applications?key=ee11d848-dadc-4923-b8de-78e6a7813888</guid><pubDate>Mon, 07 May 2012 09:00:00 GMT</pubDate><feedburner:origLink>http://ayende.com/blog/152993/testing-rhino-service-bus-applications?key=ee11d848-dadc-4923-b8de-78e6a7813888</feedburner:origLink></item><item><title>Strange production errors</title><description>&lt;p&gt;The following code cause a &lt;em&gt;really&lt;/em&gt; strange error in production:&lt;/p&gt; &lt;blockquote&gt; &lt;p&gt;new MailAddress("test@gmail.​com");&lt;/p&gt;&lt;/blockquote&gt; &lt;p&gt;The specified string is not in the form required for an e-mail address.&lt;/p&gt; &lt;p&gt;Huh?!&lt;/p&gt; &lt;p&gt;Obviously it is!&lt;/p&gt; &lt;p&gt;After immediately leaping to the conclusion that .NET is crap and I should immediately start writing my own virtual machine, I decided to dig a little deeper:&lt;/p&gt; &lt;table&gt; &lt;tbody&gt; &lt;tr&gt; &lt;th&gt;Character&lt;/th&gt; &lt;th&gt;Code&lt;/th&gt;&lt;/tr&gt; &lt;tr&gt; &lt;td&gt;t&lt;/td&gt; &lt;td&gt;116&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt; &lt;td&gt;e&lt;/td&gt; &lt;td&gt;101&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt; &lt;td&gt;s&lt;/td&gt; &lt;td&gt;115&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt; &lt;td&gt;t&lt;/td&gt; &lt;td&gt;116&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt; &lt;td&gt;@&lt;/td&gt; &lt;td&gt;64&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt; &lt;td&gt;g&lt;/td&gt; &lt;td&gt;103&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt; &lt;td&gt;m&lt;/td&gt; &lt;td&gt;109&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt; &lt;td&gt;a&lt;/td&gt; &lt;td&gt;97&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt; &lt;td&gt;i&lt;/td&gt; &lt;td&gt;105&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt; &lt;td&gt;l&lt;/td&gt; &lt;td&gt;108&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt; &lt;td&gt;.&lt;/td&gt; &lt;td&gt;46&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt; &lt;td&gt;?&lt;/td&gt; &lt;td&gt;&lt;strong&gt;&lt;font style="background-color: #ffff00"&gt;8203&lt;/font&gt;&lt;/strong&gt;&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt; &lt;td&gt;c&lt;/td&gt; &lt;td&gt;99&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt; &lt;td&gt;o&lt;/td&gt; &lt;td&gt;111&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt; &lt;td&gt;m&lt;/td&gt; &lt;td&gt;109&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt; &lt;p&gt;8203 stands for U+200B or zero width space.&lt;/p&gt; &lt;p&gt;I guess that someone with a software testing background decided to get medieval on one of our systems.&lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/AyendeRahien/~4/z40XlFDQO7g" height="1" width="1"/&gt;</description><link>http://feedproxy.google.com/~r/AyendeRahien/~3/z40XlFDQO7g/strange-production-errors</link><guid isPermaLink="false">http://ayende.com/blog/153761/strange-production-errors?key=2d4a0f97-e20c-4c37-9a7b-bf2c2921d1b4</guid><pubDate>Fri, 04 May 2012 09:00:00 GMT</pubDate><feedburner:origLink>http://ayende.com/blog/153761/strange-production-errors?key=2d4a0f97-e20c-4c37-9a7b-bf2c2921d1b4</feedburner:origLink></item><item><title>I hate this code</title><description>&lt;p&gt;I &lt;em&gt;really &lt;/em&gt;hate this code, it is so &lt;em&gt;stupid&lt;/em&gt; it makes my head hurt, and it have so much important factors in it. In particular, there is a lot of logic in here.&lt;/p&gt; &lt;p&gt;&lt;a href="http://ayende.com/blog/Images/Windows-Live-Writer/I-hate-this-code_F857/image_2.png"&gt;&lt;img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://ayende.com/blog/Images/Windows-Live-Writer/I-hate-this-code_F857/image_thumb.png" width="1110" height="511"&gt;&lt;/a&gt;&lt;/p&gt; &lt;p&gt;You might not see it as such, but a lot of this is actually &lt;em&gt;quite&lt;/em&gt; important, default values, config parsing, decisions. &lt;/p&gt; &lt;p&gt;This is important. And it is all handled in a a few methods that goes on forever and hide important details in the tediousness of parameter unpacking.&lt;/p&gt; &lt;p&gt;This approach works if you have 5 parameters, not when you have 50.&lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/AyendeRahien/~4/e5T-U_1Fuiw" height="1" width="1"/&gt;</description><link>http://feedproxy.google.com/~r/AyendeRahien/~3/e5T-U_1Fuiw/i-hate-this-code</link><guid isPermaLink="false">http://ayende.com/blog/154561/i-hate-this-code?key=da4fb8d4-69de-45f0-bfe4-1d9f61f58b0c</guid><pubDate>Thu, 03 May 2012 09:00:00 GMT</pubDate><feedburner:origLink>http://ayende.com/blog/154561/i-hate-this-code?key=da4fb8d4-69de-45f0-bfe4-1d9f61f58b0c</feedburner:origLink></item><item><title>Thou shall not delete</title><description>&lt;p&gt;Ouch!&lt;/p&gt;&lt;pre class="csharpcode"&gt;&lt;span class="kwrd"&gt;public&lt;/span&gt; ActionResult DeleteComment(&lt;span class="kwrd"&gt;int&lt;/span&gt; id)
+{
+  var userComment = RavenSession.Load&amp;lt;UserComment&amp;gt;(id);
+
+  &lt;span class="kwrd"&gt;if&lt;/span&gt; (userComment == &lt;span class="kwrd"&gt;null&lt;/span&gt;)
+    &lt;span class="kwrd"&gt;return&lt;/span&gt; &lt;span class="kwrd"&gt;new&lt;/span&gt; HttpStatusCodeResult(204);
+
+  var user = RavenSession.GetUser(User.Identity.Name);
+  &lt;span class="kwrd"&gt;if&lt;/span&gt;(user == &lt;span class="kwrd"&gt;null&lt;/span&gt; || (user.Role != UserRole.Moderator &amp;amp;&amp;amp; user.Role != UserRole.Admin))
+    &lt;span class="kwrd"&gt;return&lt;/span&gt; &lt;span class="kwrd"&gt;new&lt;/span&gt; HttpStatusCodeResult(403, &lt;span class="str"&gt;"You must be logged in as moderator or admin to be able to delete comments"&lt;/span&gt;);
+
+  RavenSession.Delete(user);
+
+  &lt;span class="kwrd"&gt;return&lt;/span&gt; &lt;span class="kwrd"&gt;new&lt;/span&gt; HttpStatusCodeResult(204);
+}&lt;/pre&gt;
+&lt;style type="text/css"&gt;.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+&lt;/style&gt;&lt;img src="http://feeds.feedburner.com/~r/AyendeRahien/~4/XBjAcTTihJc" height="1" width="1"/&gt;</description><link>http://feedproxy.google.com/~r/AyendeRahien/~3/XBjAcTTihJc/thou-shall-not-delete</link><guid isPermaLink="false">http://ayende.com/blog/154977/thou-shall-not-delete?key=a86334f4-49a8-4d6d-aca1-848c98741867</guid><pubDate>Wed, 02 May 2012 09:00:00 GMT</pubDate><feedburner:origLink>http://ayende.com/blog/154977/thou-shall-not-delete?key=a86334f4-49a8-4d6d-aca1-848c98741867</feedburner:origLink></item><item><title>And sometimes Things Just Works</title><description>&lt;p&gt;I am in the process of writing an article about RavenDB, and I just wrote the following code to demonstrate RavenDB schema less nature:&lt;/p&gt; &lt;blockquote&gt;&lt;pre class="csharpcode"&gt;&lt;span class="kwrd"&gt;using&lt;/span&gt; (var session = documentStore.OpenSession())
+{
+    session.Store(&lt;span class="kwrd"&gt;new&lt;/span&gt; Customer
+    {
+        Name = &lt;span class="str"&gt;"Joe Smith"&lt;/span&gt;,
+        Attributes =
+            {
+                {&lt;span class="str"&gt;"IsAnnoyingCustomer"&lt;/span&gt;, &lt;span class="kwrd"&gt;true&lt;/span&gt;},
+                {&lt;span class="str"&gt;"SatisfactionLevel"&lt;/span&gt;, 8.7},
+                {&lt;span class="str"&gt;"LicensePlate"&lt;/span&gt;, &lt;span class="str"&gt;"B7D-12JA"&lt;/span&gt;}
+            }
+    });
+
+    session.SaveChanges();
+}
+
+&lt;span class="kwrd"&gt;using&lt;/span&gt; (var session = documentStore.OpenSession())
+{
+    var customers = session.Query&amp;lt;Customer&amp;gt;()
+        .Where(x =&amp;gt; x.Attributes[&lt;span class="str"&gt;"IsAnnoyingCustomer"&lt;/span&gt;].Equals(&lt;span class="kwrd"&gt;true&lt;/span&gt;))
+        .ToList();
+
+    Console.WriteLine(customers.Count);
+
+    session.SaveChanges();
+}
+&lt;/pre&gt;
+&lt;style type="text/css"&gt;.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+&lt;/style&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;This &lt;em&gt;worked&lt;/em&gt;, flawlessly. &lt;/p&gt;
+&lt;p&gt;The amount of work that we have put into RavenDB to make such things work is really scary when you sit down to think about it.&lt;/p&gt;
+&lt;p&gt;But it works, it does what I expect it to do and it doesn’t get in my way, woohoo!&lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/AyendeRahien/~4/3Mqn89BAGcI" height="1" width="1"/&gt;</description><link>http://feedproxy.google.com/~r/AyendeRahien/~3/3Mqn89BAGcI/and-sometimes-things-just-works</link><guid isPermaLink="false">http://ayende.com/blog/152865/and-sometimes-things-just-works?key=e94ea6a3-4b80-4b2b-b1cd-85944875771e</guid><pubDate>Tue, 01 May 2012 09:00:00 GMT</pubDate><feedburner:origLink>http://ayende.com/blog/152865/and-sometimes-things-just-works?key=e94ea6a3-4b80-4b2b-b1cd-85944875771e</feedburner:origLink></item><item><title>Multi Threading Insanity</title><description>&lt;blockquote&gt; &lt;p&gt;&lt;img src="http://www.thefinancialpanner.com/wp-content/uploads/2010/12/EinsteinInsanity.jpg"&gt; &lt;p&gt;Insanity: doing the same thing over and over again and expecting different results.&lt;br&gt;&lt;a href="http://www.brainyquote.com/quotes/authors/a/albert_einstein.html"&gt;Albert Einstein&lt;/a&gt;&lt;br&gt;&lt;/p&gt;&lt;/blockquote&gt; &lt;p&gt;You obviously never done any multi threading work, dude!&lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/AyendeRahien/~4/uHFovP02BxI" height="1" width="1"/&gt;</description><link>http://feedproxy.google.com/~r/AyendeRahien/~3/uHFovP02BxI/multi-threading-insanity</link><guid isPermaLink="false">http://ayende.com/blog/153793/multi-threading-insanity?key=bf22defd-c7a3-4044-a31a-e2ce153917ee</guid><pubDate>Mon, 30 Apr 2012 09:00:00 GMT</pubDate><feedburner:origLink>http://ayende.com/blog/153793/multi-threading-insanity?key=bf22defd-c7a3-4044-a31a-e2ce153917ee</feedburner:origLink></item><item><title>Relational searching sucks, don&amp;rsquo;t try to replicate it</title><description>&lt;p&gt;&lt;a href="http://stackoverflow.com/questions/10219183/ravendb-multimap-index"&gt;This question&lt;/a&gt; on Stack Overflow is a fairly common one. Here is the data:&lt;/p&gt; &lt;p&gt;&lt;a href="http://ayende.com/blog/Images/Windows-Live-Writer/Relational-searching-sucks-dont-try-to-r_11D52/image_2.png"&gt;&lt;img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://ayende.com/blog/Images/Windows-Live-Writer/Relational-searching-sucks-dont-try-to-r_11D52/image_thumb.png" width="719" height="181"&gt;&lt;/a&gt;&lt;/p&gt; &lt;p&gt;And the question was about how to get RavenDB to create an index that would have the following results:&lt;/p&gt; &lt;table border="0" cellspacing="0" cellpadding="2" width="400"&gt; &lt;tbody&gt; &lt;tr&gt; &lt;td valign="top" width="200"&gt;&lt;pre&gt;&lt;code&gt;{
+   CarId: "cars/1",
+   PersonId: "people/1235",
+   UnitId: "units/4321",
+   Make: "Toyota",
+   Model: "Prius"
+   FirstName: "Ayende",
+   LastName: "Rahien"
+   Address: "Komba 10, Hadera"
+}&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td valign="top" width="200"&gt;&lt;pre&gt;&lt;code&gt;{
+   CarId: "cars/2",
+   PersonId: "people/1236",
+   UnitId: "units/4321",
+   Make: "Toyota",
+   Model: "4runner"
+   FirstName: "test",
+   LastName: "test"
+   Address: "blah blah"
+}&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td valign="top" width="200"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td valign="top" width="200"&gt;&lt;pre&gt;&lt;code&gt;same unit different person owns a different car&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;p&gt;Now, if you try really hard, you can probably try to get something like that, but that is the wrong way to go about this in RavenDB.&lt;/p&gt;
+&lt;p&gt;Instead, we can write the following index:&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://ayende.com/blog/Images/Windows-Live-Writer/Relational-searching-sucks-dont-try-to-r_11D52/image_4.png"&gt;&lt;img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://ayende.com/blog/Images/Windows-Live-Writer/Relational-searching-sucks-dont-try-to-r_11D52/image_thumb_1.png" width="652" height="528"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Note that this index is a simple multi map index, it isn’t a multi map/reduce index. There is no need.&lt;/p&gt;
+&lt;p&gt;This index can return one of three types. &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Car – just show the car to the user&lt;br&gt;&lt;a href="http://ayende.com/blog/Images/Windows-Live-Writer/Relational-searching-sucks-dont-try-to-r_11D52/image_6.png"&gt;&lt;img style="background-image: none; border-bottom: 0px; border-left: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://ayende.com/blog/Images/Windows-Live-Writer/Relational-searching-sucks-dont-try-to-r_11D52/image_thumb_2.png" width="379" height="337"&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Person – now that we have a person, we have the id, and we can query for that:&lt;br&gt;&lt;a href="http://ayende.com/blog/Images/Windows-Live-Writer/Relational-searching-sucks-dont-try-to-r_11D52/image_8.png"&gt;&lt;img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://ayende.com/blog/Images/Windows-Live-Writer/Relational-searching-sucks-dont-try-to-r_11D52/image_thumb_3.png" width="309" height="332"&gt;&lt;/a&gt;&amp;nbsp;&lt;a href="http://ayende.com/blog/Images/Windows-Live-Writer/Relational-searching-sucks-dont-try-to-r_11D52/image_10.png"&gt;&lt;img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://ayende.com/blog/Images/Windows-Live-Writer/Relational-searching-sucks-dont-try-to-r_11D52/image_thumb_4.png" width="297" height="322"&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Unit – now that we have a unit, we have the id, and we can query for that:&lt;br&gt;&lt;a href="http://ayende.com/blog/Images/Windows-Live-Writer/Relational-searching-sucks-dont-try-to-r_11D52/image_12.png"&gt;&lt;img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://ayende.com/blog/Images/Windows-Live-Writer/Relational-searching-sucks-dont-try-to-r_11D52/image_thumb_5.png" width="303" height="322"&gt;&lt;/a&gt;&amp;nbsp; &lt;a href="http://ayende.com/blog/Images/Windows-Live-Writer/Relational-searching-sucks-dont-try-to-r_11D52/image_14.png"&gt;&lt;img style="background-image: none; border-bottom: 0px; border-left: 0px; margin: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top: 0px; border-right: 0px; padding-top: 0px" title="image" border="0" alt="image" src="http://ayende.com/blog/Images/Windows-Live-Writer/Relational-searching-sucks-dont-try-to-r_11D52/image_thumb_6.png" width="296" height="330"&gt;&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+&lt;p&gt;This method means that we have to generate an additional query for some cases, but it has a lot of advantages. It is &lt;em&gt;simple. &lt;/em&gt;It requires very little work from both client and server and it doesn’t suffer from the usual issues that you run into when you attempt to query over multiple disjointed data sets.&lt;/p&gt;
+&lt;p&gt;Now, the bad thing about this is that this won’t allow me to query for cross entity values, so it would be hard for me to query for the cars in Hadera owned by Ayende. But in most cases, that isn’t really a requirement. We just want to be able to search by &lt;em&gt;either&lt;/em&gt; one of those, not all of them. &lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/AyendeRahien/~4/gwtph-g0KII" height="1" width="1"/&gt;</description><link>http://feedproxy.google.com/~r/AyendeRahien/~3/gwtph-g0KII/relational-searching-sucks-donrsquo-t-try-to-replicate-it</link><guid isPermaLink="false">http://ayende.com/blog/156225/relational-searching-sucks-donrsquo-t-try-to-replicate-it?key=3412f1a5-c407-4e81-8a0f-9736ec153e17</guid><pubDate>Fri, 27 Apr 2012 09:00:00 GMT</pubDate><feedburner:origLink>http://ayende.com/blog/156225/relational-searching-sucks-donrsquo-t-try-to-replicate-it?key=3412f1a5-c407-4e81-8a0f-9736ec153e17</feedburner:origLink></item><item><title>As the user&amp;rsquo;s put it: Insight into the RavenDB design mindset</title><description>&lt;p&gt;I have been blogging for a long time now, and I am quite comfortable in expressing myself, but I was still blown away by &lt;a href="http://groups.google.com/group/ravendb/browse_thread/thread/5a90fc3a551e4e56/afa9c6fb0b17387a"&gt;this post to the RavenDB mailing list&lt;/a&gt;. Mostly because this thread sums up a lot of the core points that led me to design RavenDB the way it is today.&lt;/p&gt; &lt;p&gt;&lt;a href="http://blog.mindplay.dk/"&gt;Rasmus Schultz&lt;/a&gt; has been able to put a lot of the thought processes behind the RavenDB design into words.&lt;/p&gt; &lt;blockquote&gt; &lt;p&gt;Back when I took my education in systems development, basically, I was taught to build aggregates as large, as complete and as connected as possible. But that was 14 years ago, and I'm starting to think, what they taught me back then was based on the kind of thinking that works for single-user, typically desktop applications, where the entire model was assumed to be in-memory, and therefore had to be traversible, since there was no "engine" you could go back to and ask for another piece of the model. &lt;p&gt;I can see now why that doesn't make sense for concurrent applications with large models persisted in the background. It just never occurred to me, and looked extremely wrong to me, because that's not how I was taught to think.&lt;/p&gt;&lt;/blockquote&gt; &lt;p&gt;&lt;em&gt;Yes&lt;/em&gt;. That is the exact problem that I see people run into over and over. The create highly connected object model, without regards to how they are persisted, and then they run into problems using them. And the assumption that everything is equally costly to read from memory is &lt;em&gt;hugely&lt;/em&gt; expensive.  &lt;blockquote&gt; &lt;p&gt;Furthermore, I'm starting to see why NHibernate doesn't really work well for me. So here's the main thing that's starting to dawn on me, and please confirm or correct me on this: &lt;p&gt;It seems that the idea behind NH is to configure the expected data-access strategies for the model itself. You write configuration-files that define the expected data-access strategies, but potentially, you're doing this based on assumptions about how you might access the data in this or that scenario. &lt;p&gt;The problem I'm starting to see, is that you're defining these assumptions statically - and while it is possible to deviate from these defined patterns, it's easy to think that once you've defined your access strategies, you're "done", and the model "just works" and you can focus on writing business logic, which too frequently turns out to be untrue in practice.&lt;/p&gt;&lt;/blockquote&gt; &lt;p&gt;To be fair, you &lt;em&gt;can&lt;/em&gt; specify those things in place, with full context. And I have been recommending to do just that for years, but yeah, that is a very common issue. &lt;blockquote&gt; &lt;p&gt;This contrasts with RavenDB, where you formally define the access strategies for specific &lt;i&gt;scenarios&lt;/i&gt; - rather than for the &lt;i&gt;model &lt;/i&gt;itself. And of course the same access strategy may work in different scenarios, but you're not tempted to assume that a single access strategy is going to work for all scenarios. &lt;p&gt;You're encouraged to think and make choices about what you're accessing and updating in each scenario, rather than just defining one overriding strategy and charging ahead blindly on the assumption that it'll always just work, or always perform well, or always make updates that are sufficiently small to not cause concurrency problems. &lt;p&gt;Am I catching on?&lt;/p&gt;&lt;/blockquote&gt; &lt;p&gt;Precisely. &lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/AyendeRahien/~4/_6SDG3ECQeI" height="1" width="1"/&gt;</description><link>http://feedproxy.google.com/~r/AyendeRahien/~3/_6SDG3ECQeI/as-the-userrsquo-s-put-it-insight-into-the-ravendb-design-mindset</link><guid isPermaLink="false">http://ayende.com/blog/156193/as-the-userrsquo-s-put-it-insight-into-the-ravendb-design-mindset?key=fed19b58-ac2d-4684-9fc0-36f7f8416a6c</guid><pubDate>Thu, 26 Apr 2012 06:00:00 GMT</pubDate><feedburner:origLink>http://ayende.com/blog/156193/as-the-userrsquo-s-put-it-insight-into-the-ravendb-design-mindset?key=fed19b58-ac2d-4684-9fc0-36f7f8416a6c</feedburner:origLink></item><item><title>Lazy&amp;rsquo;s Man comprehensive search with RavenDB</title><description>&lt;p&gt;
+	RavenDB supports many types of searches, and in this case, I want to show something that belongs to the cool parts of the pile, but also on the &amp;ldquo;you probably don&amp;rsquo;t really want to do this&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;
+	First, let me explain why this is cool, then we will talk about why you probably don&amp;rsquo;t want to do that (and finally, about scenarios where you actually do want this).&lt;/p&gt;
+&lt;p&gt;
+	Here is an index that will allow you to search over all of the values of all of the properties in the user entity:&lt;/p&gt;
+&lt;blockquote&gt;
+	&lt;pre class="csharpcode"&gt;
+&lt;span class="kwrd"&gt;public&lt;/span&gt; &lt;span class="kwrd"&gt;class&lt;/span&gt; Users_AllProperties : AbstractIndexCreationTask&amp;lt;User, Users_AllProperties.Result&amp;gt;
+{
+    &lt;span class="kwrd"&gt;public&lt;/span&gt; &lt;span class="kwrd"&gt;class&lt;/span&gt; Result
+    {
+        &lt;span class="kwrd"&gt;public&lt;/span&gt; &lt;span class="kwrd"&gt;string&lt;/span&gt; Query { get; set; }
+    }
+    &lt;span class="kwrd"&gt;public&lt;/span&gt; Users_AllProperties()
+    {
+        Map = users =&amp;gt;
+              from user &lt;span class="kwrd"&gt;in&lt;/span&gt; users
+              select &lt;span class="kwrd"&gt;new&lt;/span&gt;
+              {
+                  Query = AsDocument(user).Select(x =&amp;gt; x.Value)
+              };
+        Index(x=&amp;gt;x.Query, FieldIndexing.Analyzed);
+    }
+}&lt;/pre&gt;
+	&lt;style type="text/css"&gt;
+.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }	&lt;/style&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;
+	This can be easily query for things like:&lt;/p&gt;
+&lt;blockquote&gt;
+	&lt;pre class="csharpcode"&gt;
+s.Query&amp;lt;Users_AllProperties.Result, Users_AllProperties&amp;gt;()
+    .Where(x=&amp;gt;x.Query == &lt;span class="str"&gt;&amp;quot;Ayende&amp;quot;&lt;/span&gt;) &lt;span class="rem"&gt;// search first name&lt;/span&gt;
+    .As&amp;lt;User&amp;gt;()
+    .ToList()
+
+
+s.Query&amp;lt;Users_AllProperties.Result, Users_AllProperties&amp;gt;()
+    .Where(x=&amp;gt;x.Query == &lt;span class="str"&gt;&amp;quot;Rahien&amp;quot;&lt;/span&gt;) &lt;span class="rem"&gt;// search last name&lt;/span&gt;
+    .As&amp;lt;User&amp;gt;()
+    .ToList()&lt;/pre&gt;
+	&lt;style type="text/css"&gt;
+.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }	&lt;/style&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;
+	The fun part is that because we are actually going to index all the properties values into the Query field, which then allow us to easily query for every one of the values without any trouble.&lt;/p&gt;
+&lt;p&gt;
+	The problem with that is that this is also quite wasteful and likely to lead to bad results down the road. Why?&lt;/p&gt;
+&lt;p&gt;
+	For two major reasons. First, because this is going to index &lt;em&gt;everything&lt;/em&gt;, and would result in larger index, more IO, etc. The second reason is that it is going to lead to bad results because you are now searching over everything, including the &amp;ldquo;last login date&amp;rdquo; and the &amp;ldquo;password hint&amp;rdquo;. That means that your search results relevancy is going to be poor.&lt;/p&gt;
+&lt;p&gt;
+	So why would you ever want to do something like that if it is bad?&lt;/p&gt;
+&lt;p&gt;
+	Well, there are a few scenarios where this is applicable. You need to do that if you want to be able to search over completely / mostly dynamic entities. And you want to do that if you have entities which are specifically generated for the purpose of being searched.&lt;/p&gt;
+&lt;p&gt;
+	Both cases are fairly rare (the first case is usually covered by dynamic indexing, anyway), so I wanted to point this out, and also point out that it is usually far better to just specify what are the fields that actually &lt;em&gt;matter&lt;/em&gt; for you.&lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/AyendeRahien/~4/aMxPlw9lg8Q" height="1" width="1"/&gt;</description><link>http://feedproxy.google.com/~r/AyendeRahien/~3/aMxPlw9lg8Q/lazyrsquo-s-man-comprehensive-search-with-ravendb</link><guid isPermaLink="false">http://ayende.com/blog/153729/lazyrsquo-s-man-comprehensive-search-with-ravendb?key=e7a79ba5-c52a-4d96-a3ca-4c21d7f4e1d7</guid><pubDate>Wed, 25 Apr 2012 09:00:00 GMT</pubDate><feedburner:origLink>http://ayende.com/blog/153729/lazyrsquo-s-man-comprehensive-search-with-ravendb?key=e7a79ba5-c52a-4d96-a3ca-4c21d7f4e1d7</feedburner:origLink></item><item><title>The RavenDB indexing process: Optimization&amp;ndash;Tuning? Why, we have auto tuning</title><description>&lt;p&gt;The final aspect of RavenDB’s x7 jump in indexing performance is the fact that we made it &lt;em&gt;freakishly smart&lt;/em&gt;.&lt;/p&gt; &lt;p&gt;During standard operation, most indexes only update when new information comes in, we are usually talking about a small number of documents for every indexing run. The problem is what happens when you have a sudden outpour of documents into RavenDB? For example, during nightly ETL batch, or just if you suddenly have a flood of users doing write operations.&lt;/p&gt; &lt;p&gt;The problem here is that we actually have to balance a lot of variable at the same time:&lt;/p&gt; &lt;ul&gt; &lt;li&gt;The number of documents that we have to index*.&lt;/li&gt; &lt;li&gt;The current memory utilization**.&lt;/li&gt; &lt;li&gt;How any cores I have available to do the index work with?&lt;/li&gt; &lt;li&gt;How much time do I have to do this?&lt;/li&gt;&lt;/ul&gt; &lt;p&gt;Basically, the idea goes like this, if I have a small batch size, I am able to index more quickly, ensuring that we have fresher results. If I have big batch size, I am able to index more documents, and my overall indexing times goes down.&lt;/p&gt; &lt;p&gt;There is a non trivial cost associated with every indexing run, so reducing the number of indexing run is good, but the more documents I shove into a single run, the more memory will I use, and the more time it will take before the results are visible to the users.&lt;/p&gt; &lt;p&gt;* It is non trivial because there is no easy way for us to even know how many documents we have left to index (to find out is costly).&lt;/p&gt; &lt;p&gt;** Memory utilization is &lt;em&gt;hard &lt;/em&gt;to figure out in a managed world. I don’t actually have a way to &lt;em&gt;know&lt;/em&gt; how much memory I am using for indexing and how much for other stuff, and there is no real way to say “free the memory from the last indexing run”, or even estimate how much memory that took.&lt;/p&gt; &lt;p&gt;What we have decided on doing is to start from a very small (low hundreds) indexing batch size, and see what is actually going on live. If we see that we have more documents to index than the current batch size, we will slowly double the size of the batch. Slowly, because bigger batches requires more memory, and we also have to take into account current utilization, memory usage, and a bunch of other factors as well. We also go the other way around, able to reduce the indexing batch size on demand based on how much work we have to do right now.&lt;/p&gt; &lt;p&gt;We also provide an upper limit, because at some point it make sense to just do a big batch and make the indexing results visible than to try to do everything all at once. &lt;/p&gt; &lt;p&gt;The fun part in all of that is that once we have found the appropriate algorithm for this, it means that RavenDB will automatically adjust itself based on real production load. If you have an low update rate, it will favor small indexing batches and immediately execute indexing on the new documents. However, if you suddenly have a spike in traffic and the update rate goes up, RavenDB will adjust the indexing batch size so it will be able to keep up with your rate.&lt;/p&gt; &lt;p&gt;We have done some (read, a huge amount) testing with regards to this new optimization, and it turns out that under slow update frequency, we are seeing an average of 15 – 25 ms between a document update and it showing up in the indexes. That is pretty good, but what is going on when we have data just pouring in?&lt;/p&gt; &lt;p&gt;We tested this with a 3 million documents and 3 indexes. And it turn out that under this scenario, where we are trying to shove data into RavenDB as fast as it can accept it, we do see an increase in index latency. Under those condition, latency rose all the way to 1.5 seconds.&lt;/p&gt; &lt;p&gt;This is actually something that I am &lt;em&gt;very&lt;/em&gt; happy about, because we were able to automatically adjust to the changing conditions, and were still able to index things at a reasonable rate (note that under this scenario, the batch size was usually 8 – 16 thousands documents, vs. the 128 – 256 that it is normally).&lt;/p&gt; &lt;p&gt;Because we were able to adjust the batch size on the fly, we could handle sustained writes at this rate with no interruption in service and no real need to think about this from the users perspective.. Exactly what the RavenDB philosophy calls for.&lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/AyendeRahien/~4/h7pnHhrIYSU" height="1" width="1"/&gt;</description><link>http://feedproxy.google.com/~r/AyendeRahien/~3/h7pnHhrIYSU/the-ravendb-indexing-process-optimizationndash-tuning-why-we-have-auto-tuning</link><guid isPermaLink="false">http://ayende.com/blog/155425/the-ravendb-indexing-process-optimizationndash-tuning-why-we-have-auto-tuning?key=e8935e72-3d8c-4b63-a000-2e4f35b2fc57</guid><pubDate>Tue, 24 Apr 2012 09:00:00 GMT</pubDate><feedburner:origLink>http://ayende.com/blog/155425/the-ravendb-indexing-process-optimizationndash-tuning-why-we-have-auto-tuning?key=e8935e72-3d8c-4b63-a000-2e4f35b2fc57</feedburner:origLink></item><item><title>The RavenDB indexing process: Optimization&amp;ndash;Getting documents from disk</title><description>&lt;p&gt;As I noted in my &lt;a href="http://ayende.com/blog/154721/the-ravendb-indexing-process-optimization?key=c5c0347883c34378b5bae4c17d05a292"&gt;previous post&lt;/a&gt;, we have done major optimizations for RavenDB. One of the areas where we improved the performance was reading the documents from the disk for indexing.&lt;/p&gt; &lt;p&gt;In Pseudo Code, it looks like this:&lt;/p&gt; &lt;blockquote&gt;&lt;pre class="csharpcode"&gt;&lt;span class="kwrd"&gt;while&lt;/span&gt; database_is_running:
+  stale = find_stale_indexes()
+  lastIndexedEtag = find_last_indexed_etag(stale)
+  docs_to_index = &lt;font style="background-color: #ffff00"&gt;get_documents_since&lt;/font&gt;(lastIndexedEtag, batch_size)
+  &lt;/pre&gt;
+&lt;style type="text/css"&gt;.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }
+&lt;/style&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;As it turned out, we had a major optimization option here, because of the way the data is actually structured on disk. In simple terms, we have an on disk index that lists the documents in the order in which they were updated, and then we have the actual documents themselves, which may be anywhere on the disk.&lt;/p&gt;
+&lt;p&gt;Instead of loading the documents in the orders in which they were modified, we decided to try something different. We first query the information we need to find the document on disk from the index, then we sort them based on the optimal access pattern, to reduce disk movement and ensure that we have as sequential reads as possible. Then we take those results in memory and sort them based on their last update time again.&lt;/p&gt;
+&lt;p&gt;This seems to be a perfectly obvious thing to do, assuming that you are aware of such things, but it is actually something that is very easy not to notice. The end result is quite promising, and it contributed to the 7+ times improvements in perf that we had for indexing costs.&lt;/p&gt;
+&lt;p&gt;But surprisingly, it wasn’t the major factor, I’ll discuss a &lt;em&gt;huge&lt;/em&gt; perf boost in this area tomorrow.&lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/AyendeRahien/~4/9kvyd_I2vwo" height="1" width="1"/&gt;</description><link>http://feedproxy.google.com/~r/AyendeRahien/~3/9kvyd_I2vwo/the-ravendb-indexing-process-optimizationndash-getting-documents-from-disk</link><guid isPermaLink="false">http://ayende.com/blog/155201/the-ravendb-indexing-process-optimizationndash-getting-documents-from-disk?key=83100102-0777-4529-9bfd-9f98734fea82</guid><pubDate>Mon, 23 Apr 2012 07:00:00 GMT</pubDate><feedburner:origLink>http://ayende.com/blog/155201/the-ravendb-indexing-process-optimizationndash-getting-documents-from-disk?key=83100102-0777-4529-9bfd-9f98734fea82</feedburner:origLink></item><item><title>RavenDB 1.2 work has started (and a road map)</title><description>&lt;p&gt;Two years after the launch of RavenDB 1.0, (preceded by several years of working on 1.0, of course). We are now starting to actually plan and work on RavenDB 1.2.&lt;/p&gt; &lt;p&gt;You can read the &lt;a href="http://issues.hibernatingrhinos.com/releaseNotes?q=%23%7BV+1.2%7D&amp;amp;title=Roadmap+for+RavenDB+1.2&amp;amp;token=C5EF36A41BE2DADF26934B655F57E2EA&amp;amp;verbose=false"&gt;planned roadmap here&lt;/a&gt;. RavenDB 1.2 is a big release, for several reasons.&lt;/p&gt; &lt;ul&gt; &lt;li&gt;We are going to break RavenDB into several distinct editions, from the RavenDB Basic, suitable for small apps to RavenDB Standard which is the current version and all the way up to RavenDB enterprise, which is going to get some awesome features (windows clustering, index encryption, etc). We are also going to have plans for ISVs, which will allow them royalty free distribution of RavenDB for their customers.&lt;/li&gt; &lt;li&gt;We are going to update our pricing structure. You’ll hear more about this when we have finalized pricing.&lt;/li&gt;&lt;/ul&gt; &lt;p&gt;Because I am well aware of the possible questions, I suggest reading the thread discussing both editions and pricing in the mailing list:&lt;/p&gt; &lt;ul&gt; &lt;li&gt;&lt;a href="http://groups.google.com/group/ravendb/browse_thread/thread/f737cb1fe1420dc6/07734a5c7957a564"&gt;http://groups.google.com/group/ravendb/browse_thread/thread/f737cb1fe1420dc6/07734a5c7957a564&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href="http://groups.google.com/group/ravendb/browse_thread/thread/da5e15a75f3f6cb2/c17ff91a23f403dc"&gt;http://groups.google.com/group/ravendb/browse_thread/thread/da5e15a75f3f6cb2/c17ff91a23f403dc&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt; &lt;p&gt;I will repeat again that we haven’t yet made final pricing decisions, so don’t take the numbers thrown around in those threads as gospel, but they are pretty close to what we will have.&lt;/p&gt; &lt;p&gt;This is the boring commercial stuff, but I am much more interested in talking about the new RavenDB roadmap. In fact, you can actually &lt;a href="http://issues.hibernatingrhinos.com/releaseNotes?q=%23%7BV+1.2%7D&amp;amp;title=Roadmap+for+RavenDB+1.2&amp;amp;token=C5EF36A41BE2DADF26934B655F57E2EA&amp;amp;verbose=false"&gt;read all of our plans here&lt;/a&gt;. The major components for RavenDB 1.2 are:&lt;/p&gt; &lt;ul&gt; &lt;li&gt;Better integration with C# 5.0 – much better support for async in general, async replicaiton, async sharding, etc.&lt;/li&gt; &lt;li&gt;Enterprise level features – Windows Clustering, Full Database Encryption, Indexing Priorities, Compression, etc.&lt;/li&gt; &lt;li&gt;Installer and server console - so you can manage your RavenDB installation more easily.&lt;/li&gt; &lt;li&gt;Better Admin support – scheduled backups, S3 Backups, live restores, etc.&lt;/li&gt; &lt;li&gt;Internalizing commonly used bundles – you shouldn’t have to take additional steps to make use of common functionality. &lt;/li&gt;&lt;/ul&gt; &lt;p&gt;There are other stuff, of course, but those are the main pillars. &lt;/p&gt; &lt;p&gt;As mentioned, you can &lt;a href="http://issues.hibernatingrhinos.com/releaseNotes?q=%23%7BV+1.2%7D&amp;amp;title=Roadmap+for+RavenDB+1.2&amp;amp;token=C5EF36A41BE2DADF26934B655F57E2EA&amp;amp;verbose=false"&gt;read all of that&lt;/a&gt; yourself, and we would welcome feedback on our current plans and suggestions for the new version.&lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/AyendeRahien/~4/GCiDdJwnha8" height="1" width="1"/&gt;</description><link>http://feedproxy.google.com/~r/AyendeRahien/~3/GCiDdJwnha8/ravendb-1-2-work-has-started-and-a-road-map</link><guid isPermaLink="false">http://ayende.com/blog/156257/ravendb-1-2-work-has-started-and-a-road-map?key=6d39de5c-d994-48db-adcc-57070edd566b</guid><pubDate>Sun, 22 Apr 2012 09:43:00 GMT</pubDate><feedburner:origLink>http://ayende.com/blog/156257/ravendb-1-2-work-has-started-and-a-road-map?key=6d39de5c-d994-48db-adcc-57070edd566b</feedburner:origLink></item><item><title>The RavenDB indexing process: Optimization&amp;ndash;De-parallelizing work</title><description>&lt;p&gt;One of the major dangers in doing perf work is that you have a scenario, and you optimize the &lt;em&gt;hell&lt;/em&gt; out of that scenario. It is actually pretty easy to do without even noticing it. The problem is that when you do things like that, you are likely to be optimizing a single scenario to perform really well, but you are hurting the overall system performance.&lt;/p&gt; &lt;p&gt;In this example, we have moved heaven and earth to make sure that we are indexing things as fast as possible, and we tested with 3 indexes, on an 4 cores machine. As it turned out, we actually &lt;em&gt;had&lt;/em&gt; improved things, for &lt;em&gt;that particular scenario&lt;/em&gt;.&lt;/p&gt; &lt;p&gt;Using the same test case on a single core machine was suddenly far more heavy weight, because we were pushing a lot of work at the same time. More than the machine could process. The end result was that it actually got there, but much more slowly than if we would have run things sequentially.&lt;/p&gt; &lt;p&gt;Of course, I give you the outliers, but those are good indicators for what we found out. Initially, we thought that we could resolve that by using the TPL’s MaxDegreeOfParallelism, but it turned out to be more complex than that. We have IO bound and we have CPU bound tasks that we need to execute, and trying to execute IO heavy tasks with this would actually cause issues in this scenario.&lt;/p&gt; &lt;p&gt;We had to manually throttle things ourselves, both to ensure limited number of parallel work, and because we have a lot more information about the actual tasks than the TPL have. We can schedule them in a way that is far more efficient because we can tell what is actually going on.&lt;/p&gt; &lt;p&gt;The end result is that we are actually using less parallelism, overall, but in a more efficient manner.&lt;/p&gt; &lt;p&gt;In my next post, I’ll discuss the auto batch tuning support, which allows us to do some really amazing things from the point of view of system performance. &lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/AyendeRahien/~4/d3fX8DuGUqE" height="1" width="1"/&gt;</description><link>http://feedproxy.google.com/~r/AyendeRahien/~3/d3fX8DuGUqE/the-ravendb-indexing-process-optimizationndash-de-parallelizing-work</link><guid isPermaLink="false">http://ayende.com/blog/155393/the-ravendb-indexing-process-optimizationndash-de-parallelizing-work?key=ca7a266b-fb3e-4642-bf6d-f38b9357bc86</guid><pubDate>Fri, 20 Apr 2012 09:00:00 GMT</pubDate><feedburner:origLink>http://ayende.com/blog/155393/the-ravendb-indexing-process-optimizationndash-de-parallelizing-work?key=ca7a266b-fb3e-4642-bf6d-f38b9357bc86</feedburner:origLink></item><item><title>The RavenDB indexing process: Optimization&amp;ndash;Parallelizing work</title><description>&lt;p&gt;
+	One of the things that we are doing during the index process for RavenDB is applying triggers and deciding what, if and how a document will be indexed. The actual process is a bit more involved, because we have to do additional things (like figure out which indexes have already indexed those particular documents).&lt;/p&gt;
+&lt;p&gt;
+	At any rate, the interesting thing is that this is a process which is pretty basic:&lt;/p&gt;
+&lt;blockquote&gt;
+	&lt;pre class="csharpcode"&gt;
+&lt;span class="kwrd"&gt;for&lt;/span&gt; doc &lt;span class="kwrd"&gt;in&lt;/span&gt; docs:
+    matchingIndexes = FindIndexesFor(doc)
+    &lt;span class="kwrd"&gt;if&lt;/span&gt; matchingIndexes.Count &amp;gt; 0:
+       doc = ExecuteTriggers(doc) 
+       &lt;span class="kwrd"&gt;if&lt;/span&gt; doc != &lt;span class="kwrd"&gt;null&lt;/span&gt;:
+          yield doc&lt;/pre&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;
+	&lt;style type="text/css"&gt;
+.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }	&lt;/style&gt;
+&lt;/p&gt;
+&lt;p&gt;
+	The interesting thing about this is that this is a set of operations that only works on a single document at a time, and the result is the modified documents.&lt;/p&gt;
+&lt;p&gt;
+	We were able to gain &lt;em&gt;significant&lt;/em&gt; perf boost by simply moving to a Parallel.ForEach call.&amp;nbsp; This seems simple enough, right? Parallelize the work, get better benefits.&lt;/p&gt;
+&lt;p&gt;
+	Except that there are issues with this as well, which I&amp;rsquo;ll touch on my next post.&lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/AyendeRahien/~4/uOPvq7MG_Gg" height="1" width="1"/&gt;</description><link>http://feedproxy.google.com/~r/AyendeRahien/~3/uOPvq7MG_Gg/the-ravendb-indexing-process-optimizationndash-parallelizing-work</link><guid isPermaLink="false">http://ayende.com/blog/155233/the-ravendb-indexing-process-optimizationndash-parallelizing-work?key=1b0d214b-677a-422a-8e17-fa739f5d2804</guid><pubDate>Thu, 19 Apr 2012 09:00:00 GMT</pubDate><feedburner:origLink>http://ayende.com/blog/155233/the-ravendb-indexing-process-optimizationndash-parallelizing-work?key=1b0d214b-677a-422a-8e17-fa739f5d2804</feedburner:origLink></item></channel></rss>

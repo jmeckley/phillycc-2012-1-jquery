@@ -1,0 +1,18 @@
+﻿body
+{
+    font-size: 12px;
+    padding: 10px;
+}
+form > p 
+{
+    padding: 2px 0px 2px 0px;
+}
+form > p > label 
+{
+    display: inline-block;
+    width: 50px;
+}
+form > p > .ui-button
+{
+    width: 75px;
+}

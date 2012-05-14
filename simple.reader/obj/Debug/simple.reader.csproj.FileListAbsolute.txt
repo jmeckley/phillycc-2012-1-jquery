@@ -1,0 +1,5 @@
+C:\Users\jasonmeckley\Documents\Presentations\2012\05\Philly Code Camp\simple.reader\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\jasonmeckley\Documents\Presentations\2012\05\Philly Code Camp\simple.reader\bin\simple.reader.dll
+C:\Users\jasonmeckley\Documents\Presentations\2012\05\Philly Code Camp\simple.reader\bin\simple.reader.pdb
+C:\Users\jasonmeckley\Documents\Presentations\2012\05\Philly Code Camp\simple.reader\obj\Debug\simple.reader.dll
+C:\Users\jasonmeckley\Documents\Presentations\2012\05\Philly Code Camp\simple.reader\obj\Debug\simple.reader.pdb
